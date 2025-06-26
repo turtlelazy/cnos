@@ -17,8 +17,7 @@ def get_bbox_from_mesh(mesh):
     return OBB
 
 
-def get_obj_diameter(mesh_path):
-    mesh = load_mesh(mesh_path)
+def get_obj_diameter(mesh):
     extents = mesh.extents * 2
     return np.linalg.norm(extents)
 

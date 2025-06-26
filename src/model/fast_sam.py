@@ -13,6 +13,15 @@ from typing import Any, Dict, List, Optional, Tuple
 import pytorch_lightning as pl
 from ultralytics import yolo  # noqa
 from ultralytics.nn.autobackend import AutoBackend
+from torch.serialization import add_safe_globals
+from ultralytics.nn.tasks import SegmentationModel
+add_safe_globals([SegmentationModel])
+# Store the original torch.load
+
+_original_torch_load = torch.load
+
+# Redefine torch.load safely
+torch.load = lambda *args, **kwargs: _original_torch_load(*args, **{**kwargs, 'weights_only': False})
 
 
 class CustomYOLO(YOLO):
